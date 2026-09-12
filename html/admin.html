@@ -1,4 +1,353 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Administración | EcoAula</title><link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../css/styles.css"><link rel="stylesheet" href="../css/admin-extended.css"><link rel="stylesheet" href="../css/responsive.css"></head>
-<body class="app-body admin-body"><aside class="sidebar admin-sidebar"><a class="brand" href="admin.html"><img src="../assets/images/logo.svg" alt="EcoAula"><span>EcoAula</span><small>ADMIN</small></a><nav><span class="nav-label">GESTIÓN</span><button class="active" data-admin-view="overview"><i>⌂</i> Resumen</button><button data-admin-view="courses"><i>▤</i> Cursos</button><button data-admin-view="students"><i>♙</i> Estudiantes</button><button data-admin-view="content"><i>▣</i> Contenidos</button><button data-admin-view="reports"><i>⌁</i> Reportes</button><span class="nav-label">SISTEMA</span><button data-admin-view="settings"><i>⚙</i> Configuración</button></nav><div class="sidebar-user"><div class="avatar admin-avatar">AD</div><div><strong data-user-name>Administrador</strong><small>Cuenta principal</small></div><button class="logout-button">↪</button></div></aside><div class="app-shell"><header class="topbar"><button class="menu-button">☰</button><div><small>Panel administrativo</small><h2 id="adminViewTitle">Resumen general</h2></div><div class="top-actions"><button class="icon-button theme-toggle">☾</button><button class="icon-button">♢</button><button class="btn btn-primary" id="newCourseButton">＋ Nuevo curso</button></div></header><main class="admin-content"><section class="admin-view active" id="view-overview"><div class="admin-welcome"><div><span class="eyebrow">INFORME · SEPTIEMBRE 2026</span><h1>La comunidad sigue creciendo</h1><p>Un vistazo al aprendizaje y el impacto de EcoAula.</p></div><button class="btn btn-light" id="exportReport">Exportar informe ↓</button></div><div class="admin-stats"><article><span>Estudiantes activos</span><strong>12.482</strong><small class="positive">↑ 8.4% vs. mes anterior</small></article><article><span>Tasa de finalización</span><strong>92.6%</strong><small class="positive">↑ 3.1% vs. mes anterior</small></article><article><span>Cursos publicados</span><strong id="courseCount">38</strong><small>Catálogo institucional</small></article><article><span>Satisfacción</span><strong>4.9/5</strong><small>1.284 valoraciones</small></article></div><div class="admin-dashboard-grid"><section class="panel chart-panel"><div class="panel-heading"><div><h3>Actividad de aprendizaje</h3><p>Estudiantes que completaron lecciones</p></div><select><option>Últimos 7 días</option><option>Últimos 30 días</option></select></div><div class="bar-chart"><div style="height:42%"><span>L</span></div><div style="height:58%"><span>M</span></div><div style="height:51%"><span>X</span></div><div style="height:76%"><span>J</span></div><div style="height:89%"><span>V</span></div><div style="height:68%"><span>S</span></div><div style="height:60%"><span>D</span></div></div></section><section class="panel"><div class="panel-heading"><div><h3>Progreso por categoría</h3><p>Promedio de finalización</p></div></div><div class="category-progress"><div><span><i class="dot climate"></i>Cambio climático <b>86%</b></span><div class="progress-bar"><i style="width:86%"></i></div></div><div><span><i class="dot water"></i>Agua <b>74%</b></span><div class="progress-bar blue-bar"><i style="width:74%"></i></div></div><div><span><i class="dot circular"></i>Economía circular <b>68%</b></span><div class="progress-bar amber-bar"><i style="width:68%"></i></div></div></div></section></div><section class="panel recent-panel"><div class="panel-heading"><div><h3>Actividad reciente</h3><p>Últimos movimientos en la plataforma</p></div><button class="btn btn-ghost">Ver todo</button></div><div class="activity-table"><div><span class="activity-icon">👤</span><p><strong>Nueva inscripción</strong><br>Valentina Ruiz se unió a Guardianes del agua</p><small>Hace 8 min</small></div><div><span class="activity-icon">🏆</span><p><strong>Certificado emitido</strong><br>Carlos Melo completó Clima en transformación</p><small>Hace 22 min</small></div><div><span class="activity-icon">📚</span><p><strong>Curso actualizado</strong><br>Se publicó una nueva lección en Residuo cero</p><small>Hace 1 h</small></div></div></section></section><section class="admin-view" id="view-courses"><div class="view-heading"><div><h1>Gestión de cursos</h1><p>Crea, edita y publica las rutas de aprendizaje.</p></div><button class="btn btn-primary open-course-modal">＋ Crear curso</button></div><div class="panel table-panel"><div class="table-toolbar"><div class="search"><span>⌕</span><input id="adminCourseSearch" placeholder="Buscar curso..."></div><select id="statusFilter"><option value="all">Todos los estados</option><option value="Publicado">Publicados</option><option value="Borrador">Borradores</option></select></div><div class="data-table" id="adminCourseTable"></div></div></section><section class="admin-view empty-admin-view" id="view-students"><span>👥</span><h1>Gestión de estudiantes</h1><p>Consulta matrículas, progreso y certificados de 12.482 estudiantes.</p><button class="btn btn-primary">Descargar listado</button></section><section class="admin-view empty-admin-view" id="view-content"><span>📚</span><h1>Biblioteca de contenidos</h1><p>Administra videos, documentos, guías y recursos descargables.</p><button class="btn btn-primary">Subir contenido</button></section><section class="admin-view empty-admin-view" id="view-reports"><span>📊</span><h1>Reportes e indicadores</h1><p>Analiza finalización, participación, resultados e impacto ambiental.</p><button class="btn btn-primary" id="reportDownload">Generar informe</button></section><section class="admin-view empty-admin-view" id="view-settings"><span>⚙️</span><h1>Configuración</h1><p>Personaliza la identidad, permisos y preferencias de la plataforma.</p><button class="btn btn-primary">Guardar configuración</button></section></main></div><div class="modal" id="courseModal"><form class="modal-card course-form" id="courseForm"><button type="button" class="modal-close">×</button><span class="eyebrow" id="adminEditorKicker">GESTIÓN ACADÉMICA</span><h2 id="adminEditorTitle">Crear curso</h2><input type="hidden" id="adminCourseId"><div class="form-row"><label>Título<input id="newCourseTitle" required placeholder="Ej. Biodiversidad urbana"></label><label>Categoría<select id="newCourseCategory"><option>Clima</option><option>Agua</option><option>Circularidad</option><option>Biodiversidad</option></select></label></div><label>Descripción<textarea id="newCourseDescription" required placeholder="¿Qué aprenderán los estudiantes?"></textarea></label><div class="form-row"><label>Docente responsable<input id="newCourseInstructor" required placeholder="Nombre del docente"></label><label>Duración<input id="newCourseDuration" required placeholder="Ej. 10 horas"></label></div><div class="form-row"><label>Número de módulos<input id="newCourseModules" type="number" min="1" value="4"></label><label>Estado<select id="newCourseStatus"><option>Borrador</option><option>Publicado</option></select></label></div><button class="btn btn-primary btn-block" type="submit">Guardar cambios</button></form></div><div class="toast-container"></div><script src="../js/data.js"></script><script src="../js/app.js"></script><script src="../js/admin.js"></script></body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administración | EcoAula</title>
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/admin-extended.css" />
+    <link rel="stylesheet" href="../css/settings.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+  <body class="app-body admin-body">
+    <aside class="sidebar admin-sidebar">
+      <a class="brand" href="admin.html"
+        ><img src="../assets/images/logo.svg" alt="EcoAula" /><span
+          >EcoAula</span
+        ><small>ADMIN</small></a
+      >
+      <nav>
+        <span class="nav-label">GESTIÓN</span
+        ><button class="active" data-admin-view="overview">
+          <i>⌂</i> Resumen</button
+        ><button data-admin-view="courses"><i>▤</i> Cursos</button
+        ><button data-admin-view="students"><i>♙</i> Estudiantes</button
+        ><button data-admin-view="content"><i>▣</i> Contenidos</button
+        ><button data-admin-view="reports"><i>⌁</i> Reportes</button
+        ><span class="nav-label">SISTEMA</span
+        ><button data-admin-view="settings"><i>⚙</i> Configuración</button>
+      </nav>
+      <div class="sidebar-user">
+        <div class="avatar admin-avatar">AD</div>
+        <div>
+          <strong data-user-name>Administrador</strong
+          ><small>Cuenta principal</small>
+        </div>
+        <button class="logout-button">↪</button>
+      </div>
+    </aside>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="menu-button">☰</button>
+        <div>
+          <small>Panel administrativo</small>
+          <h2 id="adminViewTitle">Resumen general</h2>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button theme-toggle">☾</button
+          ><button class="icon-button">♢</button
+          ><button class="btn btn-primary" id="newCourseButton">
+            ＋ Nuevo curso
+          </button>
+        </div>
+      </header>
+      <main class="admin-content">
+        <section class="admin-view active" id="view-overview">
+          <div class="admin-welcome">
+            <div>
+              <span class="eyebrow">INFORME · SEPTIEMBRE 2026</span>
+              <h1>La comunidad sigue creciendo</h1>
+              <p>Un vistazo al aprendizaje y el impacto de EcoAula.</p>
+            </div>
+            <button class="btn btn-light" id="exportReport">
+              Exportar informe ↓
+            </button>
+          </div>
+          <div class="admin-stats">
+            <article>
+              <span>Estudiantes activos</span><strong>12.482</strong
+              ><small class="positive">↑ 8.4% vs. mes anterior</small>
+            </article>
+            <article>
+              <span>Tasa de finalización</span><strong>92.6%</strong
+              ><small class="positive">↑ 3.1% vs. mes anterior</small>
+            </article>
+            <article>
+              <span>Cursos publicados</span><strong id="courseCount">38</strong
+              ><small>Catálogo institucional</small>
+            </article>
+            <article>
+              <span>Satisfacción</span><strong>4.9/5</strong
+              ><small>1.284 valoraciones</small>
+            </article>
+          </div>
+          <div class="admin-dashboard-grid">
+            <section class="panel chart-panel">
+              <div class="panel-heading">
+                <div>
+                  <h3>Actividad de aprendizaje</h3>
+                  <p>Estudiantes que completaron lecciones</p>
+                </div>
+                <select>
+                  <option>Últimos 7 días</option>
+                  <option>Últimos 30 días</option>
+                </select>
+              </div>
+              <div class="bar-chart">
+                <div style="height: 42%"><span>L</span></div>
+                <div style="height: 58%"><span>M</span></div>
+                <div style="height: 51%"><span>X</span></div>
+                <div style="height: 76%"><span>J</span></div>
+                <div style="height: 89%"><span>V</span></div>
+                <div style="height: 68%"><span>S</span></div>
+                <div style="height: 60%"><span>D</span></div>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h3>Progreso por categoría</h3>
+                  <p>Promedio de finalización</p>
+                </div>
+              </div>
+              <div class="category-progress">
+                <div>
+                  <span
+                    ><i class="dot climate"></i>Cambio climático
+                    <b>86%</b></span
+                  >
+                  <div class="progress-bar"><i style="width: 86%"></i></div>
+                </div>
+                <div>
+                  <span><i class="dot water"></i>Agua <b>74%</b></span>
+                  <div class="progress-bar blue-bar">
+                    <i style="width: 74%"></i>
+                  </div>
+                </div>
+                <div>
+                  <span
+                    ><i class="dot circular"></i>Economía circular
+                    <b>68%</b></span
+                  >
+                  <div class="progress-bar amber-bar">
+                    <i style="width: 68%"></i>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <section class="panel recent-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Actividad reciente</h3>
+                <p>Últimos movimientos en la plataforma</p>
+              </div>
+              <button class="btn btn-ghost">Ver todo</button>
+            </div>
+            <div class="activity-table">
+              <div>
+                <span class="activity-icon">👤</span>
+                <p>
+                  <strong>Nueva inscripción</strong><br />Valentina Ruiz se unió
+                  a Guardianes del agua
+                </p>
+                <small>Hace 8 min</small>
+              </div>
+              <div>
+                <span class="activity-icon">🏆</span>
+                <p>
+                  <strong>Certificado emitido</strong><br />Carlos Melo completó
+                  Clima en transformación
+                </p>
+                <small>Hace 22 min</small>
+              </div>
+              <div>
+                <span class="activity-icon">📚</span>
+                <p>
+                  <strong>Curso actualizado</strong><br />Se publicó una nueva
+                  lección en Residuo cero
+                </p>
+                <small>Hace 1 h</small>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section class="admin-view" id="view-courses">
+          <div class="view-heading">
+            <div>
+              <h1>Gestión de cursos</h1>
+              <p>Crea, edita y publica las rutas de aprendizaje.</p>
+            </div>
+            <button class="btn btn-primary open-course-modal">
+              ＋ Crear curso
+            </button>
+          </div>
+          <div class="panel table-panel">
+            <div class="table-toolbar">
+              <div class="search">
+                <span>⌕</span
+                ><input id="adminCourseSearch" placeholder="Buscar curso..." />
+              </div>
+              <select id="statusFilter">
+                <option value="all">Todos los estados</option>
+                <option value="Publicado">Publicados</option>
+                <option value="Borrador">Borradores</option>
+              </select>
+            </div>
+            <div class="data-table" id="adminCourseTable"></div>
+          </div>
+        </section>
+        <section class="admin-view empty-admin-view" id="view-students">
+          <span>👥</span>
+          <h1>Gestión de estudiantes</h1>
+          <p>
+            Consulta matrículas, progreso y certificados de 12.482 estudiantes.
+          </p>
+          <button class="btn btn-primary">Descargar listado</button>
+        </section>
+        <section class="admin-view empty-admin-view" id="view-content">
+          <span>📚</span>
+          <h1>Biblioteca de contenidos</h1>
+          <p>Administra videos, documentos, guías y recursos descargables.</p>
+          <button class="btn btn-primary">Subir contenido</button>
+        </section>
+        <section class="admin-view empty-admin-view" id="view-reports">
+          <span>📊</span>
+          <h1>Reportes e indicadores</h1>
+          <p>
+            Analiza finalización, participación, resultados e impacto ambiental.
+          </p>
+          <button class="btn btn-primary" id="reportDownload">
+            Generar informe
+          </button>
+        </section>
+        <section class="admin-view settings-view" id="view-settings">
+          <div class="view-heading settings-heading">
+            <div>
+              <h1>Configuración de la plataforma</h1>
+              <p>Personaliza la experiencia, el acceso y las reglas académicas.</p>
+            </div>
+            <span class="settings-state" id="settingsState">Cambios guardados</span>
+          </div>
+          <form class="settings-shell" id="platformSettingsForm">
+            <aside class="settings-nav">
+              <strong>Preferencias</strong>
+              <button class="active" type="button" data-settings-target="settings-general">Identidad</button>
+              <button type="button" data-settings-target="settings-access">Acceso y permisos</button>
+              <button type="button" data-settings-target="settings-certificates">Certificados</button>
+              <button type="button" data-settings-target="settings-notifications">Notificaciones</button>
+            </aside>
+            <div class="settings-panels">
+              <section class="panel settings-card" id="settings-general">
+                <div class="settings-card-heading">
+                  <span>01</span>
+                  <div><h3>Identidad institucional</h3><p>Datos visibles para toda la comunidad.</p></div>
+                </div>
+                <div class="settings-form-grid">
+                  <label>Nombre de la plataforma<input id="settingPlatformName" required /></label>
+                  <label>Correo de soporte<input id="settingSupportEmail" type="email" required /></label>
+                  <label>Periodo académico<input id="settingPeriod" required /></label>
+                  <label>Zona horaria<select id="settingTimezone"><option value="America/Bogota">Bogotá (GMT-5)</option><option value="America/Mexico_City">Ciudad de México (GMT-6)</option><option value="America/Lima">Lima (GMT-5)</option></select></label>
+                  <label>Estilo visual<select id="settingTheme"><option value="forest">Bosque</option><option value="ocean">Océano</option><option value="earth">Tierra</option></select></label>
+                </div>
+                <div class="settings-brand-preview" id="settingsBrandPreview"><img src="../assets/images/logo.svg" alt="Logo EcoAula" /><div><small>VISTA PREVIA</small><strong id="settingsPreviewName">EcoAula</strong><span>Educación que transforma</span></div></div>
+              </section>
+              <section class="panel settings-card" id="settings-access">
+                <div class="settings-card-heading"><span>02</span><div><h3>Acceso y permisos</h3><p>Controla cómo ingresa y participa la comunidad.</p></div></div>
+                <div class="setting-list">
+                  <label class="setting-row"><span><strong>Registro público</strong><small>Permite que nuevos estudiantes creen una cuenta.</small></span><input class="switch-input" id="settingOpenRegistration" type="checkbox" /></label>
+                  <label class="setting-row"><span><strong>Aprobación de docentes</strong><small>Requiere revisión administrativa antes de publicar.</small></span><input class="switch-input" id="settingTeacherApproval" type="checkbox" /></label>
+                  <label class="setting-row"><span><strong>Catálogo abierto</strong><small>Muestra los cursos publicados sin iniciar sesión.</small></span><input class="switch-input" id="settingPublicCatalog" type="checkbox" /></label>
+                </div>
+              </section>
+              <section class="panel settings-card" id="settings-certificates">
+                <div class="settings-card-heading"><span>03</span><div><h3>Certificados</h3><p>Define cuándo y cómo se emiten los reconocimientos.</p></div></div>
+                <div class="setting-list">
+                  <label class="setting-row"><span><strong>Emisión automática</strong><small>Genera el certificado al completar el curso.</small></span><input class="switch-input" id="settingAutoCertificates" type="checkbox" /></label>
+                </div>
+                <div class="settings-form-grid compact-grid">
+                  <label>Nota mínima aprobatoria<input id="settingPassingScore" type="number" min="0" max="100" required /></label>
+                  <label>Firma institucional<input id="settingCertificateSigner" required /></label>
+                </div>
+              </section>
+              <section class="panel settings-card" id="settings-notifications">
+                <div class="settings-card-heading"><span>04</span><div><h3>Notificaciones</h3><p>Elige qué novedades debe comunicar la plataforma.</p></div></div>
+                <div class="setting-list">
+                  <label class="setting-row"><span><strong>Resumen semanal</strong><small>Envía métricas académicas cada lunes.</small></span><input class="switch-input" id="settingWeeklyReports" type="checkbox" /></label>
+                  <label class="setting-row"><span><strong>Novedades de cursos</strong><small>Avisa cuando se publica contenido nuevo.</small></span><input class="switch-input" id="settingCourseNotifications" type="checkbox" /></label>
+                  <label class="setting-row"><span><strong>Alertas de inactividad</strong><small>Identifica estudiantes sin actividad por 14 días.</small></span><input class="switch-input" id="settingInactiveAlerts" type="checkbox" /></label>
+                </div>
+              </section>
+              <div class="save-settings-bar"><button class="btn btn-ghost" id="resetSettings" type="button">Restablecer formulario</button><button class="btn btn-primary" type="submit">Guardar configuración</button></div>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+    <div class="modal" id="courseModal">
+      <form class="modal-card course-form" id="courseForm">
+        <button type="button" class="modal-close">×</button
+        ><span class="eyebrow" id="adminEditorKicker">GESTIÓN ACADÉMICA</span>
+        <h2 id="adminEditorTitle">Crear curso</h2>
+        <input type="hidden" id="adminCourseId" />
+        <div class="form-row">
+          <label
+            >Título<input
+              id="newCourseTitle"
+              required
+              placeholder="Ej. Biodiversidad urbana" /></label
+          ><label
+            >Categoría<select id="newCourseCategory">
+              <option>Clima</option>
+              <option>Agua</option>
+              <option>Circularidad</option>
+              <option>Biodiversidad</option>
+            </select></label
+          >
+        </div>
+        <label
+          >Descripción<textarea
+            id="newCourseDescription"
+            required
+            placeholder="¿Qué aprenderán los estudiantes?"
+          ></textarea>
+        </label>
+        <div class="form-row">
+          <label
+            >Docente responsable<input
+              id="newCourseInstructor"
+              required
+              placeholder="Nombre del docente" /></label
+          ><label
+            >Duración<input
+              id="newCourseDuration"
+              required
+              placeholder="Ej. 10 horas"
+          /></label>
+        </div>
+        <div class="form-row">
+          <label
+            >Número de módulos<input
+              id="newCourseModules"
+              type="number"
+              min="1"
+              value="4" /></label
+          ><label
+            >Estado<select id="newCourseStatus">
+              <option>Borrador</option>
+              <option>Publicado</option>
+            </select></label
+          >
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">
+          Guardar cambios
+        </button>
+      </form>
+    </div>
+    <div class="toast-container"></div>
+    <script src="../js/data.js"></script>
+    <script src="../js/app.js"></script>
+    <script src="../js/admin.js"></script>
+  </body>
+</html>
