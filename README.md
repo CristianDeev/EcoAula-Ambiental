@@ -9,6 +9,7 @@ Abre `index.html` en un navegador moderno.
 ## Accesos de demostración
 
 - Estudiante: `estudiante@ecoaula.co` / `123456`
+- Docente: `docente@ecoaula.co` / `docente123`
 - Administrador: `admin@ecoaula.co` / `admin123`
 
 ## Funcionalidades
@@ -21,6 +22,8 @@ Abre `index.html` en un navegador moderno.
 - Seguimiento de progreso
 - Certificado imprimible
 - Panel administrativo y creación de cursos
+- Panel docente con edición, publicación, duplicado y seguimiento de cursos
+- Fichas académicas con objetivos, temario, duración, nivel y docente
 - Tema claro y oscuro
 - Diseño adaptable a computador, tableta y móvil
 

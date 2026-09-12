@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded',()=>{
   const id=new URLSearchParams(location.search).get('id')||'clima';const course=EcoStore.get('courses',EcoData.courses).find(item=>item.id===id)||EcoData.courses[0];
   $('#courseTitle').textContent=course.title;$('#courseTitleMini').textContent=course.title;$('#courseCategory').textContent=course.category.toUpperCase();$('#courseProgressBar').style.width=`${course.progress}%`;$('#courseProgressText').textContent=`${Math.ceil(course.lessons*(course.progress/100))} de ${course.lessons} lecciones`;
+  $('#courseDuration').textContent=course.duration||'10 horas';$('#courseLevel').textContent=course.level||'Inicial';$('#courseInstructor').textContent=course.instructor||'Equipo EcoAula';$('#courseRating').textContent=`${course.rating||'Nuevo'} / 5`;
+  $('#courseObjectives').innerHTML=(course.objectives||['Comprender los conceptos centrales','Aplicar lo aprendido en el entorno']).map(item=>`<li>${item}</li>`).join('');
+  $('#courseSyllabus').innerHTML=(course.syllabus||[]).map(item=>`<li>${item}</li>`).join('');
   $('#moduleList').innerHTML=EcoData.modules.map((module,index)=>`<section class="module ${module.open?'open':''}"><button><span><strong>${module.title}</strong><br>${module.lessons.length} lecciones</span><i>${module.complete?'✓':'⌄'}</i></button><div class="module-lessons">${module.lessons.map((lesson,lessonIndex)=>`<button class="${module.active===lessonIndex?'active':''}" data-lesson="${lesson}"><span class="lesson-dot">${module.complete||lessonIndex<2?'✓':'○'}</span>${lesson}</button>`).join('')}</div></section>`).join('');
   $$('.module>button').forEach(button=>button.addEventListener('click',()=>button.parentElement.classList.toggle('open')));
   $$('.module-lessons button').forEach(button=>button.addEventListener('click',()=>{$$('.module-lessons button').forEach(item=>item.classList.remove('active'));button.classList.add('active');$('#lessonTitle').textContent=button.dataset.lesson;$('#lessonLead').textContent=`Explora los conceptos esenciales de ${button.dataset.lesson.toLowerCase()} y relaciónalos con decisiones cotidianas.`;window.scrollTo({top:0,behavior:'smooth'})}));
@@ -9,4 +12,3 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('#completeLesson').addEventListener('click',()=>{const courses=EcoStore.get('courses',EcoData.courses);const target=courses.find(item=>item.id===id);target.progress=Math.min(100,target.progress+8);EcoStore.set('courses',courses);showToast('Lección completada · +40 EcoPuntos');setTimeout(()=>location.href=target.progress>=90?'quiz.html':'course.html?id='+id,700)});
   $('#prevLesson').addEventListener('click',()=>showToast('Has vuelto a la lección anterior'));$('#openForum').addEventListener('click',()=>$('#forumModal').classList.add('open'));
 });
-
